@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>Poista auto</h1>
+
+<div class="card" style="width: 50rem;">
+    <div class="card-body">
+        <h3 class="card-title">Paina "Poista", jos haluat varmasti poistaa auton {{autot.merkki}}</h3>
+        
+        <a href="/autot/" class="btn btn-primary">Takaisin</a>
+
+        <a href="/delete-autot/{{autot.id}}/" class="btn btn-danger">Poista</a>
+
+    </div>
+</div>
+
+{% endblock %}

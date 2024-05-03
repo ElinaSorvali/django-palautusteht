@@ -1,0 +1,78 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<br />
+<div id="add-div"></div>
+<br />
+
+<h1>Autot</h1>
+
+<button id="add-btn" class="btn btn-secondary btn-sm" onclick="showaddform()">Lisää uusi auto</button>
+
+<p>
+<form method="post" action="/search-autot/">
+
+    {%csrf_token %}
+    <input class="card-text" class="card-text" type="text" placeholder="haku" name="search">
+
+    <input type="submit" value="Etsi" class="btn btn-secondary btn-sm" name="">
+</form></p>
+  
+
+{% for a in autot %}<p>
+<div class="card" style="width: 50rem;">
+    <div class="card-body">
+        <h4 class="card-title">{{a.merkki}}</h4>
+        <p class="card-text">Malli: {{a.malli}} | Vuosi: {{a.vuosi}} | Väri: {{a.väri}} </p>
+        <p class="card-text">Moottori: {{a.moottori}} | Hinta: {{a.hinta}} €</p>
+
+        <a href="/edit-autot/{{a.id}}/" class="btn btn-primary btn-sm">Muokkaa</a>
+        <a href="/confirm-delete-autot/{{a.id}}/" class="btn btn-danger btn-sm">Poista</a>    
+    </div>
+</div>
+</p>
+<!-- Jos sivulla ei ole mtn -->
+{% empty %}
+
+<div class="card" style="width: 50rem;">
+    <div class="card-body">
+        <p class="card-text">Ei autoja tietokannassa! </p>
+    </div>
+</div>
+{%endfor%}
+
+
+<script>
+
+    let x = `
+    <h2 style="color: lightblue">Täytä tiedot</h2>
+    
+    <div class="card" style="width: 20rem;">
+        <div class="card-body">
+            <form method="post" action="/add-autot/">
+    
+                {% csrf_token %}
+                <input class="card-text" class="card-text" type="text" placeholder="merkki" name="merkki">
+                <input class="card-text" type="text" placeholder="malli" name="malli">
+                <input class="card-text" type="text" placeholder="vuosi" name="vuosi">
+                <input class="card-text" type="text" placeholder="väri" name="väri">
+                <input class="card-text" type="text" placeholder="moottori" name="moottori">
+                <input class="card-text" type="text" placeholder="hinta" name="hinta">
+                <br/>
+                <input type="submit" value="Lisää uusi" class="btn btn-success btn-sm" name="">
+                <input type="submit" id="hide-btn" class="btn btn-secondary btn-sm" onclick="hideaddform()" value="Peruuta" name="">
+            </form>
+        </div>
+    </div>`
+
+    function showaddform() {
+        document.getElementById("add-div").innerHTML = x
+    }
+
+    function hideaddform() {
+        document.getElementById("add-div").innerHTML = ""
+    }
+
+</script>
+{% endblock %}

@@ -1,0 +1,17 @@
+h1 {
+    color: rgb(30, 9, 13);
+}
+
+body {
+    background-color:rgb(255, 242, 221);
+}
+
+.card {
+    background-color:rgb(254, 238, 212);
+    border-style: dashed;
+    border-color: black;
+}
+
+h2 {
+    color: rgb(44, 6, 80);
+}

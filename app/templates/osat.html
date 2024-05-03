@@ -1,0 +1,85 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<br />
+<!-- Lisäyslomakkeen paikka -->
+<div id="add-div"></div>
+<br />
+
+<h1>Osat</h1>
+
+<button id="add-btn" class="btn btn-secondary btn-sm" onclick="showaddform()">Lisää uusi varaosa</button>
+<p><form method="post" action="/search-osat/">
+
+    {%csrf_token %}
+    <input class="card-text" class="card-text" type="text" placeholder="search" name="search">
+
+    <input type="submit" value="Search" class="btn btn-secondary btn-sm" name="">
+</form></p>
+{% for o in osat %}
+<p>
+<div class="card" style="width: 50rem;">
+    <div class="card-body">
+        <h3 class="card-title">{{o.tuotenimi}} </h3>
+        <h5 class="card-text">Auto: {{o.auto}}</h5>
+        <p class="card-text">Paino: {{o.paino}} g | Hinta: {{o.hinta}} € | Määrä: {{o.määrä}} kpl</p>
+        <a href="/edit-osat/{{o.id}}/" class="btn btn-primary btn-sm">Muokkaa</a>
+
+        <a href="/confirm-delete-osat/{{o.id}}/" class="btn btn-danger btn-sm">Poista</a>
+
+
+    </div>
+</div>
+</p>
+<!-- Jos tietokannassa ei ole mtn -->
+{% empty %}
+
+<div class="card" style="width: 50rem;">
+    <div class="card-body">
+        <p class="card-text">Ei varaosia tietokannassa!</p>
+    </div>
+</div>
+
+{%endfor%}
+
+
+<script>
+
+    let y = `
+    <h2 style="color: darkorange;">Täytä kentät</h2>
+    
+    <div class="card" style="width: 20rem;">
+        <div class="card-body">
+            <form method="post" action="/add-osat/">
+                {%csrf_token %}
+                <input class="card-text" class="card-text" type="text" placeholder="Tuotenimi" name="tuotenimi">
+                <input class="card-text" type="text" placeholder="Paino / g" name="paino">
+                <input class="card-text" type="text" placeholder="Määrä" name="määrä">
+                <input class="card-text" type="text" placeholder="Hinta / €" name="hinta">
+                <br />
+                <label for="auto">Auto</label>
+                <select id="auto" name="auto">
+                {% for a in autot %}
+                  <option value="{{a.id}}">{{a.merkki}}</option>
+                  {% endfor %}
+                </select>
+
+                <br/>
+                <input type="submit" value="Lisää uusi" class="btn btn-success btn-sm" name="">
+                <input type="submit" id="hide-btn" class="btn btn-secondary btn-sm" onclick="hideaddform()" value="Peruuta" name="">
+            </form>
+        </div>
+    </div>`
+
+    function showaddform() {
+        document.getElementById("add-div").innerHTML = y
+    }
+
+    function hideaddform() {
+        document.getElementById("add-div").innerHTML = ""
+    }
+
+</script>
+
+{% endblock %}

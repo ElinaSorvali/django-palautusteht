@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<p>
+<h2>Tervetuloa varaosasovellukseen {{name}}!</h2>
+</p>
+<p><h4>Jatka käyttöä valitsemalla ylärivistä toiminto.</h4></p>
+<img src="{% static 'images/car1.webp' %}" style="max-width: 900px; height: auto;" />
+
+{% endblock %}

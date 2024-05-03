@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<p>
+<div class="card" style="width: 25rem;">
+    <div class="card-header">
+
+        <h5>Muokkaa varaosaa {{osat.tuotenimi}}</h5>
+
+        <div class="card-body">
+            <form method="post" action="/edit-osat-post/{{osat.id}}/">
+
+                {%csrf_token %}
+                <div class="form-group">
+                    <label>Määrä</label>
+                    <input type="text" name="määrä" value={{osat.määrä}}>
+                </div>
+                <div class="form-group">
+                    <label>Hinta</label>
+                    <input type="number" step=".01" name="hinta" value={{osat.hinta}}>
+                </div>
+                <input type="submit" value="Päivitä" class="btn btn-success btn-sm">
+                <input type="button" onclick="window.location.href='/osat'" id="hide-btn"
+                    class="btn btn-secondary btn-sm" value="Peruuta">
+            </form>
+        </div>
+    </div>
+</div>
+</p>
+
+{% endblock %}
